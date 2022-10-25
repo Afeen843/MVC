@@ -1,0 +1,146 @@
+/*Gernal Css */
+
+
+body
+{
+
+    font-family: 'Roboto';
+}
+
+/* header css*/
+
+.header{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: whitesmoke;
+}
+
+.left-side{
+
+    width: 200px;
+    height: 50px;
+
+}
+
+.right-side
+{
+
+    display: grid;
+    grid-template-columns: 40px 40px 40px;
+    height: 30px;
+    
+    
+}
+
+.middle-side
+{
+    display: grid;
+    grid-template-columns:250px 30px ;
+   
+}
+
+.logo
+{
+    
+margin-top: 5px;
+margin-left: 8px;
+height: 35px;
+border-radius: 30px;
+object-fit: contain;
+object-position: left;
+
+}
+
+
+.search_bar
+{
+
+height: 25px;
+border: none;
+}
+
+.search-icon
+{
+
+height: 10px;
+border: none;
+
+}
+.header_image{
+
+    object-fit: contain;
+    background-size: cover;
+    opacity:0.7;
+ }
+
+ .nav-bar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: grey;
+    position: fixed;
+    top: 53px;
+    bottom: 0px;
+    width: 75px;
+
+}
+
+
+.footer
+{
+    height: 100px;
+    position: fixed;
+    background-color: beige;
+    bottom:1px;
+    left: 77px;
+    right: 0px;
+}
+
+/*Section section*/
+
+
+
+.grid
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 10px;
+        column-gap:10px;
+    
+    }
+
+
+.image{
+
+width: 150px;
+
+}
+
+.description
+{
+
+    font-size: small;
+    line-height: 0px;
+
+}
+
+
+.boxes{
+    background-color: whitesmoke;
+}
+
+.section {
+
+    margin-left: 150px;
+    margin-top: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+}
+
+.container{
+    padding: 5px;
+}
