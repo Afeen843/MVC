@@ -2,38 +2,90 @@
 $path = str_replace('\classes', '', __dir__);
 include_once($path . '\interfaces\database.php');
 
+/**
+ * DB Class
+ */
 class  db implements database
 {
 
-    var $database;
-    var $host;
-    var $username;
-    var $password;
-    var $connection;
+    /**
+     * DB Connection
+     *
+     * @var PDO|null
+     */
+    public $_dbConnection;
+    /**
+     * DB Name
+     *
+     * @var string
+     */
+    protected $_dbName;
+    /**
+     * DB Host
+     *
+     * @var string
+     */
+    protected $_dbHost;
+    /**
+     * DB User
+     *
+     * @var string
+     */
+    protected $_dbUser;
+    /**
+     * DB Password
+     *
+     * @var string
+     */
+    protected $_dbPassword;
 
-    function __construct(
-        $database,
-        $host,
-        $username,
-        $password
-    )
+    /**
+     *
+     * Main Constructor
+     */
+    function __construct()
     {
-        $this->database = $database;
-        $this->host = $host;
-        $this->username = $username;
-        $this->password = $password;
+        /**
+         * dB Host
+         */
+        $this->_dbHost = DB_HOST;
+        $this->_dbUser = DB_USER;
+        $this->_dbPassword = DB_PASSWORD;
+        $this->_dbName = DB_NAME;
+
+        $this->_dbConnection = $this->createConnection();
     }
 
-    function createConnection()
+    /**
+     * Create Connection With Database
+     *
+     * @return PDO|null
+     */
+    public function createConnection()
     {
-        $dsn = "mysql:host=$this->host;dbname=$this->database;charset=UTF8";
 
         try {
-            $this->connection = new PDO($dsn, $this->username, $this->password);
+            if (!$this->_dbConnection) {
+                $dsn = "mysql:host=$this->_dbHost;dbname=$this->_dbName;charset=UTF8";
+                $dbConnection = new PDO($dsn, $this->_dbUser, $this->_dbPassword);
+                $this->_dbConnection = $dbConnection;
+            }
+            return $this->_dbConnection;
+
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            print_r("Exception occurred during creating connection with Database Error: " . $e->getMessage());
+            $this->_dbConnection = null;
+            return $this->_dbConnection;
         }
     }
+
+    public function mainProcessor($serverParams = [])
+    {
+        debug($serverParams);
+
+    }
+
+
 
     /**
      * Create function
@@ -66,15 +118,51 @@ class  db implements database
 
     }
 
+    function chart()
+    {
+        $sql = "select month as month , sales as sale from sales order by month";
+        $stmt = $this->connection->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    /**
+     * @param $tableName
+     * @return void
+     */
+
+    function total($tableName)
+    {
+        $sql = "select * from $tableName";
+        $stmt = $this->connection->query($sql);
+        $count = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return count($count);
+    }
+
+
+    /**
+     *
+     *Active users
+     * @param $tableName
+     * @return int
+     */
+    function active($tableName)
+    {
+        $sql = "select * from $tableName where status=1";
+        $stmt = $this->connection->query($sql);
+        $count = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return count($count);
+    }
+
 
     /**
      *
      */
-    function view($tableName,$id)
+    function view($tableName, $id)
     {
-    $sql="select *from $tableName where entity_id=$id ";
-    $stmt=$this->connection->query($sql);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "select *from $tableName where entity_id=$id ";
+        $stmt = $this->connection->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -90,11 +178,9 @@ class  db implements database
         }
 
         $sql = "UPDATE $tableName SET " . implode(', ', $args) . "WHERE entity_id=$id";
-        $stmt= $this->connection->query($sql);
+        $stmt = $this->connection->query($sql);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
-
 
 
     /**
@@ -103,9 +189,9 @@ class  db implements database
      */
     function delete($tableName, $id)
     {
-     $sql="delete from $tableName where entity_id = $id";
-     $stmt=$this->connection->query($sql);
-     return $stmt->fetch(PDO::FETCH_ASSOC);
+        $sql = "delete from $tableName where entity_id = $id";
+        $stmt = $this->connection->query($sql);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
 
@@ -174,10 +260,7 @@ class  db implements database
         //multiple parameters
         $sql = 'select * from customers where entity_id=:id and customer_group = :customer_group';
         $stmt = $this->connection->prepare($sql);
-        $stmt->execute([
-            'id' => $id,
-            'customer_group' => $customers_group
-        ]);
+        $stmt->execute(['id' => $id, 'customer_group' => $customers_group]);
         $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($post as $posts) {
             echo '<h1 style="text-align: center">' . $posts['name'] . '</h1>';
@@ -191,11 +274,11 @@ class  db implements database
         try {
             $sql = "select * from $tableName";
             $stmt = $this->connection->query($sql);
-            $post= $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $post;
 
 
-        }catch (PDOException $e){
+        } catch (PDOException $e) {
             echo 'hello';
             $e->getMessage();
         }

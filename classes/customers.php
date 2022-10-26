@@ -35,4 +35,14 @@ class customers extends db implements customerInterface
         return parent::show($this->tableName);
     }
 
+    function activeUser(): int
+    {
+    return parent::active($this->tableName);
+    }
+
+    function totalUser() :int
+    {
+        return parent::total($this->tableName);
+    }
+
 }

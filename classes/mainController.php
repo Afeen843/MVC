@@ -3,6 +3,13 @@
 class mainController
 {
 
+    /**
+     * Run Action
+     *
+     * @param $actionName
+     * @return void
+     */
+
     function runAction($actionName)
     {
         if (method_exists($this, $actionName)) {

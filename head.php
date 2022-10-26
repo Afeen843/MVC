@@ -1,31 +1,11 @@
 <?php
-include_once('config.php');
-
-
-/**
- * Constants
- */
-
-const BASE_DIR = __DIR__;
-const BASE_DIR__CONTROLLER = BASE_DIR . '/controller';
-const BASE_DIR_Frontend = BASE_DIR . '/frontend';
-const BASE_DIR_Database = BASE_DIR . '/Database';
-const BASE_DIR_MODEL = BASE_DIR . '/model';
-
-/**
- * URLS
- */
-
-const BASE_URL = 'http://localhost/peakcok';
-
-/**
- * Page Indexing
- */
-
-
+/** require once main config file */
+require_once 'config.php';
 
 $page = $_GET['page'] ?? '';
 $action = $_GET['action'] ?? '';
+
+
 
 switch ($page) {
 
@@ -41,6 +21,12 @@ switch ($page) {
 
     case 'products':
         include_once(BASE_DIR__CONTROLLER . '/products.php');
+        break;
+
+    case 'dashboard':
+        include_once (BASE_DIR__CONTROLLER . '/dashboard.php');
+        $controller=new dashboardController();
+        $controller->runAction($action);
         break;
 
 }

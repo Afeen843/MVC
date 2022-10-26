@@ -1,10 +1,10 @@
 <?php
-$path = str_replace('\admin', '', __DIR__);
-include_once('header.php');
-include_once('footer.php');
-include_once('navbar.php');
-include_once($path . '/head.php');
+/** include once */
+include_once ('head.php');
 
+include_once (BASE_DIR.'/header.php');
+include_once (BASE_DIR.'/navbar.php');
+include_once (BASE_DIR.'/footer.php');
 
 ?>
 

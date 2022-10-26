@@ -112,6 +112,25 @@ border: none;
     
     }
 
+.dashboard
+{
+    display:grid;
+    grid-template-columns: 300px 300px 300px ;
+    row-gap: 40px;
+    column-gap: 40px;
+    margin-top: 50px;
+
+}
+
+.box
+{
+
+    border: 5px solid;
+
+}
+
+
+
 
 .image{
 
