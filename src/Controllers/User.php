@@ -6,7 +6,7 @@ class User
 {
 
     public function index(){
-       echo 'User '.$id;
+       echo 'User ';
     }
 
     public static function check()

@@ -3,17 +3,11 @@ declare(strict_types=1);
 
 namespace App\Bootstrap;
 
-use http\Exception;
-
 class Router
 {
     const REQUEST_METHODE_GET = 'GET';
     const REQUEST_METHODE_POST = 'POST';
     private array $routes = [];
-
-    public function __construct(){
-
-    }
 
     public function __toString():string
     {
@@ -46,10 +40,10 @@ class Router
             }
         }
 
-        return http_response_code(404);
+        View::render('not_found');
     }
 
-    function resolve(string $uri, string $requestMethod):void
+    function handleRequest(string $uri, string $requestMethod):void
     {
         [$method,$params] = $this->getRouterHandler($uri,$requestMethod);
 
