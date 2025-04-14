@@ -23,8 +23,8 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <a href="signin.php" class="btn btn-outline-light me-2">Sign In</a>
-                <a href="register.php" class="btn btn-primary">Register</a>
+                <a href="/signin" class="btn btn-outline-light me-2">Sign In</a>
+                <a href="/register" class="btn btn-primary">Register</a>
             </div>
         </div>
     </div>
