@@ -10,7 +10,7 @@ class RegisterModel extends BaseModel
     public $password;
     public $confirmPassword;
 
-    public $error = [];
+    private $error = [];
 
 
     public function validate(): bool
@@ -28,12 +28,12 @@ class RegisterModel extends BaseModel
 
         if(empty($this->password)){
             $flag = false;
-            $this->error['password'] = "First name is required";
+            $this->error['password'] = "password name is required";
         }
 
         if(empty($this->confirmPassword)){
             $flag = false;
-            $this->error['confirmPassword'] = "First name is required";
+            $this->error['confirmPassword'] = "confirm password name is required";
         }
 
         if(empty($this->email)){
@@ -44,14 +44,14 @@ class RegisterModel extends BaseModel
         if(!empty($this->email)){
             if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
                 $flag = false;
-                $this->error[$this->email] = "Invalid email format";
+                $this->error['email'] = "Invalid email format";
             }
         }
 
         if(!empty($this->password) && !empty($this->confirmPassword)){
             if($this->password !== $this->confirmPassword){
                 $flag = false;
-                $this->error['password'] = "Passwords do not match";
+                $this->error['confirmPassword'] = "Passwords do not match";
             }
         }
 
@@ -63,9 +63,14 @@ class RegisterModel extends BaseModel
         return $this->error;
     }
 
-    public function insertUser()
+    public function hasError($key): bool
     {
+        return $this->error[$key] ?? false;
+    }
 
+    public function getErrorText($key): string
+    {
+        return $this->error[$key];
     }
 
 }

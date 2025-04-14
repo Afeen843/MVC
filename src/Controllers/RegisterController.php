@@ -17,10 +17,10 @@ class RegisterController extends BaseController
         $registerModel = new RegisterModel();
         $registerModel->loadData($this->request->body());
         if($registerModel->validate()){
-            echo 'data is validated';
-        }else{
-            print_r($registerModel->getErrors());
+            echo 'validated';
         }
+
+        View::render('register',['title'=>'Register','registerModel'=>$registerModel]);
     }
 
 }

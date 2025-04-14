@@ -1,4 +1,5 @@
 <?php \App\Bootstrap\View::render('header',$data) ?>
+<?php var_dump($registerModel->getErrors(),$registerModel->getErrorText('confirmPassword')); ?>
 <body class="bg-light">
 <div class="container">
     <div class="row justify-content-center">
@@ -14,30 +15,56 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" name="firstName" class="form-control" id="firstName" required>
+                                <input type="text" name="firstName" class="form-control <?= $registerModel->hasError('firstName') ? 'is-invalid'  : ''?>" id="firstName"
+                                       value="<?= $registerModel->firstName ?? ''?>" >
+                                <?php if($registerModel->hasError('firstName')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $registerModel->getErrorText('firstName') ?>
+                                </div>
+                                <?php endif; ?>
                             </div>
                             <div class="col-md-6">
                                 <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" name="lastName" class="form-control" id="lastName" required>
+                                <input type="text" name="lastName" class="form-control <?= $registerModel->hasError('lastName') ? 'is-invalid'  : ''?>" id="lastName"
+                                       value="<?= $registerModel->lastName ?? ''?>" >
+                                <?php if($registerModel->hasError('lastName')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $registerModel->getErrorText('lastName') ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-12">
                                 <label for="email" class="form-label">Email Address</label>
-                                <input type="email" name="email" class="form-control" id="email" required>
+                                <input type="text" name="email" class="form-control <?= $registerModel->hasError('email') ? 'is-invalid'  : ''?>" id="email"
+                                       value="<?= $registerModel->email ?? ''?>" >
+                                <?php if($registerModel->hasError('email')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $registerModel->getErrorText('email') ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-12">
                                 <label for="password" class="form-label">Password</label>
-                                <div class="input-group">
-                                    <input type="password" name="password" class="form-control" id="password" required>
-                                </div>
+                                    <input type="password" name="password" class="form-control <?= $registerModel->hasError('password') ? 'is-invalid'  : ''?>" id="password"
+                                           value="<?= $registerModel->password?>">
+                                <?php if($registerModel->hasError('password')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $registerModel->getErrorText('password') ?? 'FUCK' ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-12">
                                 <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                <div class="input-group">
-                                    <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
-                                </div>
+                                    <input type="password" name="confirmPassword" class="form-control <?= $registerModel->hasError('confirmPassword') ? 'is-invalid'  : ''?>" id="confirmPassword"
+                                           value="<?= $registerModel->confirmPassword ?? ''?>">
+                                <?php if($registerModel->hasError('confirmPassword')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $registerModel->getErrorText('confirmPassword') ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="col-12 mt-4">
