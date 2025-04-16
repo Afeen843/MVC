@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><?=@$title?></title>
-    <!-- Link to Bootstrap CSS -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-</head>
-<body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">

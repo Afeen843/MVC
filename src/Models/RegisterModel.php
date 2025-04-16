@@ -4,13 +4,13 @@ namespace App\Models;
 
 class RegisterModel extends BaseModel
 {
-    public $firstName;
-    public $lastName;
-    public $email;
-    public $password;
-    public $confirmPassword;
+    public string $firstName;
+    public string $lastName;
+    public string $email;
+    public string $password;
+    public string $confirmPassword;
 
-    private $error = [];
+    private array $error = [];
 
 
     public function validate(): bool

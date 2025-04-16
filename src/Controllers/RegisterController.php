@@ -18,9 +18,9 @@ class RegisterController extends BaseController
         $registerModel->loadData($this->request->body());
         if($registerModel->validate()){
             echo 'validated';
+        }else{
+            View::render('register',['title'=>'Register','registerModel'=>$registerModel]);
         }
-
-        View::render('register',['title'=>'Register','registerModel'=>$registerModel]);
     }
 
 }

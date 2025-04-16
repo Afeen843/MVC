@@ -1,7 +1,7 @@
 <?php
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ERROR);
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -10,16 +10,17 @@ use App\Bootstrap\Router;
 use App\Bootstrap\View;
 use App\Controllers\RegisterController;
 use App\Controllers\User;
+use App\Models\DatabaseConnection;
 
-$router = new Router();
+
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-
-
+$router = new Router();
+$db = new DatabaseConnection($_ENV['DB_DSN'],$_ENV['DB_USERNAME'],$_ENV['DB_PASSWORD']);
 
 $router->get('/',function (){
-    View::render('home');
+    View::render('home',['title'=>'Home']);
 });
 
 $router->get('/user',[User::class ,'index']);

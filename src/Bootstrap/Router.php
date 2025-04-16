@@ -5,8 +5,8 @@ namespace App\Bootstrap;
 
 class Router
 {
-    const REQUEST_METHODE_GET = 'GET';
-    const REQUEST_METHODE_POST = 'POST';
+    const string REQUEST_METHODE_GET = 'GET';
+    const string REQUEST_METHODE_POST = 'POST';
     private array $routes = [];
 
     public function __toString():string
