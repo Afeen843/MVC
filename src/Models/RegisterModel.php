@@ -55,6 +55,14 @@ class RegisterModel extends BaseModel
             }
         }
 
+
+//        if(!empty($this->password) && !empty($this->confirmPassword)){
+//            if($this->password === $this->confirmPassword){
+//                $flag = false;
+//                $this->error['confirmPassword'] = "Passwords do not match";
+//            }
+//        }
+
         return $flag;
     }
 
@@ -71,6 +79,17 @@ class RegisterModel extends BaseModel
     public function getErrorText($key): string
     {
         return $this->error[$key];
+    }
+
+    public function insertUser(): false|string
+    {
+       return $this->query->table('users')->insert([
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
+            'email' => $this->email,
+            'password_hash' => password_hash($this->password, PASSWORD_DEFAULT),
+        ]);
+
     }
 
 }

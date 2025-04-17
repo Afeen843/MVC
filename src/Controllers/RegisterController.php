@@ -16,8 +16,8 @@ class RegisterController extends BaseController
     {
         $registerModel = new RegisterModel();
         $registerModel->loadData($this->request->body());
-        if($registerModel->validate()){
-            echo 'validated';
+        if($registerModel->validate() && $registerModel->insertUser()){
+            echo 'you have registered successfully';
         }else{
             View::render('register',['title'=>'Register','registerModel'=>$registerModel]);
         }

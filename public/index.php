@@ -11,6 +11,7 @@ use App\Bootstrap\View;
 use App\Controllers\RegisterController;
 use App\Controllers\User;
 use App\Models\DatabaseConnection;
+use App\Models\QueryBuilder;
 
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
