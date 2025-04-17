@@ -125,7 +125,6 @@ class QueryBuilder
 
     public function insert($data)
     {
-        var_dump($data);
         $columns = implode(', ', array_keys($data));
         $values = ':' . implode(', :', array_keys($data));
         $this->query = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";

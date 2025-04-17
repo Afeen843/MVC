@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Bootstrap\View;
+
 class RegisterModel extends BaseModel
 {
     public string $firstName;
@@ -55,13 +57,18 @@ class RegisterModel extends BaseModel
             }
         }
 
-
-//        if(!empty($this->password) && !empty($this->confirmPassword)){
-//            if($this->password === $this->confirmPassword){
-//                $flag = false;
-//                $this->error['confirmPassword'] = "Passwords do not match";
-//            }
-//        }
+        if(!empty($this->email)){
+            if(filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+                $result = $this->query->table('users')
+                    ->select('email')
+                    ->where('email','=', $this->email)
+                    ->first();
+                if($result){
+                    $flag = false;
+                    $this->error['email'] = "Email already exists";
+                }
+            }
+        }
 
         return $flag;
     }
@@ -91,5 +98,44 @@ class RegisterModel extends BaseModel
         ]);
 
     }
+
+    public function validateLogin(): bool
+    {
+        $flag = true;
+        if(empty($this->email)){
+            $flag = false;
+            $this->error['email'] = "Email is required";
+        }
+        if(empty($this->password)){
+            $flag = false;
+            $this->error['password'] = "password is required";
+        }
+
+        if(!empty($this->email)){
+            if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+                $flag = false;
+                $this->error['email'] = "Invalid email format";
+            }
+        }
+        if(!empty($this->password) && !empty($this->email)){
+           $result = $this->query->table('users')
+               ->select('password_hash')
+               ->where('email', '=' , $this->email)
+               ->first();
+           if($result){
+               if(!password_verify($this->password, $result->password_hash)){
+                   $flag = false;
+                   $this->error['password'] = "you entered wrong password";
+               }
+           }else{
+               $flag = false;
+               $this->error['email'] = "you entered wrong email";
+           }
+        }
+
+        return $flag;
+    }
+
+
 
 }

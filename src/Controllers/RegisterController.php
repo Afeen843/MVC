@@ -23,4 +23,20 @@ class RegisterController extends BaseController
         }
     }
 
+    public function signIn(){
+
+        View::render('signin',['title'=>'Sign in']);
+    }
+
+    public function signInForm()
+    {
+        $registerModel = new RegisterModel();
+        $registerModel->loadData($this->request->body());
+        if($registerModel->validateLogin()){
+            echo 'you have Sign in successfully';
+        }else{
+            View::render('signin',['title'=>'Sign in','registerModel'=>$registerModel]);
+        }
+    }
+
 }

@@ -9,9 +9,10 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Bootstrap\Router;
 use App\Bootstrap\View;
 use App\Controllers\RegisterController;
+use App\Controllers\LoginController;
 use App\Controllers\User;
 use App\Models\DatabaseConnection;
-use App\Models\QueryBuilder;
+
 
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -29,6 +30,10 @@ $router->get('/user',[User::class ,'index']);
 $router->get('/register',[RegisterController::class ,'register']);
 
 $router->post('/register',[RegisterController::class ,'registerForm']);
+
+$router->get('/login',[RegisterController::class,'signIn']);
+
+$router->post('/login',[RegisterController::class,'signInForm']);
 
 $router->handleRequest($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 

@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <p>Already have an account? <a href="#" class="text-decoration-none">Sign in</a></p>
+                            <p>Already have an account? <a href="/login" class="text-decoration-none">Sign in</a></p>
                         </div>
                     </form>
                 </div>

@@ -10,9 +10,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.php">Contact Us</a>
-                </li>
             </ul>
             <div class="d-flex">
                 <a href="/signin" class="btn btn-outline-light me-2">Sign In</a>
