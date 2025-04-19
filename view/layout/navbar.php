@@ -12,8 +12,12 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <a href="/signin" class="btn btn-outline-light me-2">Sign In</a>
+                <?php if(!isset($_SESSION['user_id'])): ?>
+                <a href="/login" class="btn btn-outline-light me-2">Sign In</a>
                 <a href="/register" class="btn btn-primary">Register</a>
+                <?php else: ?>
+                    <a href="/logout" class="btn btn-outline-light me-2">Logout</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

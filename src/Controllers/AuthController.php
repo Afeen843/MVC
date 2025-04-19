@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Bootstrap\View;
 use App\Models\RegisterModel;
 
-class RegisterController extends BaseController
+class AuthController extends BaseController
 {
     public function register()
     {
@@ -17,7 +17,7 @@ class RegisterController extends BaseController
         $registerModel = new RegisterModel();
         $registerModel->loadData($this->request->body());
         if($registerModel->validate() && $registerModel->insertUser()){
-            echo 'you have registered successfully';
+            header('Location:/login');
         }else{
             View::render('register',['title'=>'Register','registerModel'=>$registerModel]);
         }
@@ -33,10 +33,17 @@ class RegisterController extends BaseController
         $registerModel = new RegisterModel();
         $registerModel->loadData($this->request->body());
         if($registerModel->validateLogin()){
-            echo 'you have Sign in successfully';
+            $registerModel->setUserSession();
+            header('Location:/');
         }else{
             View::render('signin',['title'=>'Sign in','registerModel'=>$registerModel]);
         }
+    }
+
+    public function logout()
+    {
+        $this->session->destroy();
+        header('Location:/');
     }
 
 }

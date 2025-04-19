@@ -8,7 +8,7 @@ class QueryBuilder
     protected \PDO $pdo;
     protected string $tableName;
     protected string|array $select = "*";
-    protected string $query;
+    protected ?string $query;
     protected array $params = [];
     protected array $where = [];
     protected ?array $orderBy = null;
@@ -33,8 +33,9 @@ class QueryBuilder
         $this->buildWhere();
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($this->params);
-        return $stmt->rowCount();
-
+        $rowCount = $stmt->rowCount();
+        $this->reset();
+        return $rowCount;
     }
     public function table(string $tableName): QueryBuilder
     {
@@ -56,7 +57,9 @@ class QueryBuilder
         $this->buildLimitOffset();
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($this->params);
-        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        $result = $stmt->fetchAll(\PDO::FETCH_OBJ);
+        $this->reset();
+        return $result;
 
     }
 
@@ -68,7 +71,9 @@ class QueryBuilder
         $this->buildLimitOffset();
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($this->params);
-        return $stmt->queryString;
+        $queryString =  $stmt->queryString;
+        $this->reset();
+        return $queryString;
     }
 
     public function first()
@@ -130,7 +135,9 @@ class QueryBuilder
         $this->query = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($data);
-        return $this->pdo->lastInsertId();
+        $lastInsertId = $this->pdo->lastInsertId();
+        $this->reset();
+        return $lastInsertId;
     }
 
     private function buildOrderBy()
@@ -167,7 +174,21 @@ class QueryBuilder
         $this->buildWhere();
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($this->params);
-        return $stmt->rowCount();
+        $rowCount = $stmt->rowCount();
+        $this->reset();
+        return $rowCount;
+    }
+
+    private function reset()
+    {
+        $this-> $select = "*";
+        $this->query = null;
+        $this->params = [];
+        $this->where = [];
+        $this->orderBy = null;
+        $this->limit = null;
+        $this->offset = null;
+        $this->set = [];
     }
 
 

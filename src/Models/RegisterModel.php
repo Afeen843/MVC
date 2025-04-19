@@ -137,5 +137,17 @@ class RegisterModel extends BaseModel
     }
 
 
+    public function setUserSession()
+    {
+        $this->session->regenerateId();
+
+        $result = $this->query->table('users')
+            ->select('id')
+            ->where('email', '=' , $this->email)
+            ->first();
+
+        $this->session->set('user_id', $result->id);
+    }
+
 
 }
