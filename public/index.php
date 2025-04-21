@@ -11,6 +11,7 @@ use App\Bootstrap\Session;
 use App\Bootstrap\View;
 use App\Controllers\AuthController;
 use App\Controllers\User;
+use App\Middleware\AuthMiddleware;
 use App\Models\DatabaseConnection;
 
 
@@ -20,13 +21,18 @@ $dotenv->load();
 
 $router = new Router();
 $session = new Session();
+
 $db = new DatabaseConnection($_ENV['DB_DSN'],$_ENV['DB_USERNAME'],$_ENV['DB_PASSWORD']);
+
+$router->registerMiddleware([
+    'auth' => AuthMiddleware::class,
+]);
 
 $router->get('/',function (){
     View::render('home',['title'=>'Home']);
 });
 
-$router->get('/user',[User::class ,'index']);
+$router->get('/user/{id}',[User::class ,'index'],'auth');
 
 $router->get('/register',[AuthController::class ,'register']);
 

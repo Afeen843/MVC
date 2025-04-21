@@ -5,13 +5,10 @@ namespace App\Controllers;
 class User
 {
 
-    public function index(){
-       echo 'User ';
+    public function index($id){
+       echo 'User ' . $id;
     }
 
-    public static function check()
-    {
-        echo "check";
-    }
+
 
 }
