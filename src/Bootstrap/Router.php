@@ -5,8 +5,8 @@ namespace App\Bootstrap;
 
 class Router
 {
-    const string REQUEST_METHODE_GET = 'GET';
-    const string REQUEST_METHODE_POST = 'POST';
+    private const string REQUEST_METHODE_GET = 'GET';
+    private const string REQUEST_METHODE_POST = 'POST';
     private array $routes = [];
     private array $middlewares = [];
 
@@ -76,15 +76,14 @@ class Router
         $next = $engine;
         foreach (array_reverse($middleware) as $name => $middleware) {
             $next = function ($params) use ($middleware, $next) {
-                $method = new $middleware;
-                return $method->handle($params, $next);
+                return (new $middleware)->handle($params, $next);
             };
         }
 
         $next($params);
     }
 
-    function handleRequest(string $uri, string $requestMethod):void
+    public function handleRequest(string $uri, string $requestMethod):void
     {
         extract($this->getRouterHandler($uri, $requestMethod));
 
